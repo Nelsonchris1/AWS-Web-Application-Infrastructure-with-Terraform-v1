@@ -93,8 +93,6 @@ This project demonstrates the deployment of a robust, scalable, and secure web a
    ```
 5. 📬 Open a pull request.
 
-## License
-This project is licensed under the [MIT License](LICENSE).
 
 ## Support
 If you find this project helpful, please consider 🌟 starring the repository!
