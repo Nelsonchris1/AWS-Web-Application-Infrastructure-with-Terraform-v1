@@ -99,10 +99,5 @@ This project is licensed under the [MIT License](LICENSE).
 ## Support
 If you find this project helpful, please consider 🌟 starring the repository!
 
-## Contact
-- **Name**: [Your Name]
-- **GitHub**: [@yourusername](https://github.com/yourusername)
-- **LinkedIn**: [Your LinkedIn Profile](https://linkedin.com/in/yourlinkedin)
-- **Email**: your.email@example.com
 
 > **Note**: Always consider the cost implications of running resources on AWS. Use `terraform destroy` to clean up resources when not in use.
