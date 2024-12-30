@@ -18,10 +18,10 @@ variable "security_group_id" {
   type        = string
 }
 
-variable "instance_ids" {
-  description = "List of instance IDs"
-  type        = list(string)
-}
+# variable "instance_ids" {
+#   description = "List of instance IDs"
+#   type        = list(string)
+# }
 
 variable "domain_name" {
   description = "Domain name for the ALB"

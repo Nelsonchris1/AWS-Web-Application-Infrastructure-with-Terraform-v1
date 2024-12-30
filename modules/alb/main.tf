@@ -35,12 +35,13 @@ resource "aws_lb_target_group" "main" {
   }
 }
 
-resource "aws_lb_target_group_attachment" "main" {
-  count            = length(var.instance_ids)
-  target_group_arn = aws_lb_target_group.main.arn
-  target_id        = var.instance_ids[count.index]
-  port             = 80
-}
+#Removed after including ASG as ASG will handle attachement seamelessly
+# resource "aws_lb_target_group_attachment" "main" {
+#   count            = length(var.instance_ids)
+#   target_group_arn = aws_lb_target_group.main.arn
+#   target_id        = var.instance_ids[count.index]
+#   port             = 80
+# }
 
 
 # Create a listener for the load balancer

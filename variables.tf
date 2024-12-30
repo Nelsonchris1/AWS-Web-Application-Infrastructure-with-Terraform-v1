@@ -22,3 +22,15 @@ variable "domain_name" {
   default     = "*.deyplay.xyz"
 }
 
+variable "ami_id" {
+  description = "AMI id for ubuntu"
+  type        = string
+  default     = "ami-05c172c7f0d3aed00"
+}
+
+
+variable "instance_type" {
+  description = "instance type"
+  type        = string
+  default     = "t2.micro"
+}

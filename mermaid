@@ -1,0 +1,43 @@
+
+flowchart TB
+    subgraph "DevOps Workflow"
+        TF[Terraform\nInfrastructure as Code]
+    end
+
+    subgraph "AWS Cloud - eu-west-2 (London)"
+        direction TB
+        
+        subgraph "VPC Default\n10.0.0.0/16"
+            direction TB
+            subgraph "Availability Zones"
+                AZ1[AZ: eu-west-2a]
+                AZ2[AZ: eu-west-2b]
+                AZ3[AZ: eu-west-2c]
+            end
+
+            subgraph "Networking"
+                SG[Security Groups\n- Web\n- Database]
+                ALB[Application Load Balancer\nHTTPS Listener]
+            end
+
+            subgraph "Auto Scaling Group\n1-2 Instances"
+                EC2_1[EC2 Instance 1\nt2.micro\nUbuntu\nApache Web Server]
+                EC2_2[EC2 Instance 2\nt2.micro\nUbuntu\nApache Web Server]
+            end
+
+            CW[CloudWatch\n- CPU Utilization\n- Target Tracking]
+        end
+
+        ACM[ACM Certificate\n*.deyplay.xyz]
+    end
+
+    subgraph "External Services"
+        GD[GoDaddy\nDomain Management\ndeyplay.xyz]
+    end
+
+    GD --> |DNS Routing| ALB
+    TF --> |Provisions| EC2_1
+    TF --> |Provisions| EC2_2
+    TF --> |Configures| SG
+    TF --> |Sets Up| ALB
+    CW --> |Triggers Scaling| EC2_2

@@ -8,10 +8,11 @@ output "subnet_ids" {
   value       = module.vpc.subnet_ids
 }
 
-output "ec2_instance_ids" {
-  description = "IDs of the EC2 instances"
-  value       = module.ec2.instance_ids
-}
+# Removed after including ASG
+# output "ec2_instance_ids" {
+#   description = "IDs of the EC2 instances"
+#   value       = module.ec2.instance_ids
+# }
 
 output "alb_dns_name" {
   description = "DNS name of the load balancer"

@@ -1,6 +1,6 @@
 resource "aws_instance" "web" {
   count                  = var.instance_count
-  ami                    = "ami-05c172c7f0d3aed00"
+  ami                    = var.ami_id
   vpc_security_group_ids = [var.security_group_id]
   key_name               = var.key_name
   instance_type          = var.instance_type
