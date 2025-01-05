@@ -1,15 +1,16 @@
-resource "aws_security_group" "web_sg" {
-  name        = "${var.project_name}-web-sg"
-  description = "Security group for web server"
+# Security group for ALB
+resource "aws_security_group" "alb_sg" {
+  name        = "${var.project_name}-ALB-sg"
+  description = "Security group for ALB server"
   vpc_id      = var.vpc_id
 
   tags = {
-    Name = "${var.project_name}-web-sg"
+    Name = "${var.project_name}-ALB-sg"
   }
 }
 
-resource "aws_vpc_security_group_ingress_rule" "http" {
-  security_group_id = aws_security_group.web_sg.id
+resource "aws_vpc_security_group_ingress_rule" "alb_http" {
+  security_group_id = aws_security_group.alb_sg.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 80
   ip_protocol       = "tcp"
@@ -17,8 +18,8 @@ resource "aws_vpc_security_group_ingress_rule" "http" {
 }
 
 
-resource "aws_vpc_security_group_ingress_rule" "https" {
-  security_group_id = aws_security_group.web_sg.id
+resource "aws_vpc_security_group_ingress_rule" "alb_https" {
+  security_group_id = aws_security_group.alb_sg.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 443
   ip_protocol       = "tcp"
@@ -26,7 +27,7 @@ resource "aws_vpc_security_group_ingress_rule" "https" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "ssh" {
-  security_group_id = aws_security_group.web_sg.id
+  security_group_id = aws_security_group.alb_sg.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 22
   ip_protocol       = "tcp"
@@ -35,7 +36,41 @@ resource "aws_vpc_security_group_ingress_rule" "ssh" {
 
 # Egress Rule for IPv4
 resource "aws_vpc_security_group_egress_rule" "all_traffic_ipv4" {
-  security_group_id = aws_security_group.web_sg.id
+  security_group_id = aws_security_group.alb_sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1"
+}
+
+
+#EC2 lunch template Security group
+resource "aws_security_group" "lunch_template_sg" {
+  name        = "${var.project_name}-lunch_template-sg"
+  description = "Security group for lunch template for ec2 instances in ASG"
+  vpc_id      = var.vpc_id
+
+  tags = {
+    Name = "${var.project_name}-lunch_template-sg"
+  }
+}
+
+resource "aws_vpc_security_group_ingress_rule" "lunch_template_http" {
+  security_group_id            = aws_security_group.lunch_template_sg.id
+  referenced_security_group_id = aws_security_group.alb_sg.id
+  from_port                    = 80
+  to_port                      = 80
+  ip_protocol                  = "tcp"
+}
+
+resource "aws_vpc_security_group_ingress_rule" "lunch_template_https" {
+  security_group_id            = aws_security_group.lunch_template_sg.id
+  referenced_security_group_id = aws_security_group.alb_sg.id
+  from_port                    = 443
+  to_port                      = 443
+  ip_protocol                  = "tcp"
+}
+
+resource "aws_vpc_security_group_egress_rule" "lunch_template_outbound" {
+  security_group_id = aws_security_group.lunch_template_sg.id
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1"
 }
@@ -56,7 +91,7 @@ resource "aws_security_group" "db_sg" {
 
 resource "aws_vpc_security_group_ingress_rule" "db_access" {
   security_group_id            = aws_security_group.db_sg.id
-  referenced_security_group_id = aws_security_group.web_sg.id
+  referenced_security_group_id = aws_security_group.alb_sg.id
   from_port                    = var.db_port
   ip_protocol                  = "tcp"
   to_port                      = var.db_port

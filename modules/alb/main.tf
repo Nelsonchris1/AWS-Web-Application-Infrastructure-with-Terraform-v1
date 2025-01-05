@@ -11,6 +11,12 @@ resource "aws_lb" "main" {
   security_groups    = [var.security_group_id]
   subnets            = var.subnet_ids
 
+  access_logs {
+    bucket  = var.access_logs_bucket
+    prefix  = "alb/logs_prod"
+    enabled = true
+  }
+
   tags = {
     Name = "${var.project_name}-application-lb"
   }

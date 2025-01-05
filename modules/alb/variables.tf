@@ -27,3 +27,8 @@ variable "domain_name" {
   description = "Domain name for the ALB"
   type        = string
 }
+
+variable "access_logs_bucket" {
+  description = "S3 bucket for access logs"
+  type        = string
+}

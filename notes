@@ -1,0 +1,6 @@
+# Edit make sure to create sg for EC2 instance to only on allow request from Load balancer SG
+# Moral creat two separate security groups. 1 for Load balancer and 1 for EC2 instance and make sure EC2 instances uses ELB sg 
+
+# Add addition listening rule to load balancer
+# Enable stickiness from Target group 
+# Enable Access logs in ALB 

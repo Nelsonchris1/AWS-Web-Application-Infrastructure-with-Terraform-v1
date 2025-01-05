@@ -33,22 +33,30 @@ module "security-groups" {
 #   project_name      = var.project_name
 # }
 
+# s3 
+module "s3" {
+  source = "./modules/s3"
+  environment    = var.environment
+}
+
 # Application load balancer module
 module "alb" {
   source            = "./modules/alb"
   project_name      = var.project_name
   vpc_id            = module.vpc.vpc_id
   subnet_ids        = module.vpc.subnet_ids
-  security_group_id = module.security-groups.web_sg_id
+  security_group_id = module.security-groups.alb_sg_id
   # instance_ids      = module.ec2.instance_ids
-  domain_name       = var.domain_name
+  domain_name        = var.domain_name
+  access_logs_bucket = module.s3.bucket_name
+
 }
 
 # Auto scaling Group module
 module "asg" {
   source            = "./modules/asg"
   project_name      = var.project_name
-  security_group_id = module.security-groups.web_sg_id
+  security_group_id = module.security-groups.lunch_template_sg
   instance_type     = var.instance_type
   ami_id            = var.ami_id
   key_name          = var.key_name

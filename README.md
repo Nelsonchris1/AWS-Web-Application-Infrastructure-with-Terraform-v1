@@ -2,7 +2,7 @@
 
 ## 🌟 Project Overview
 
-This project demonstrates the deployment of a robust, scalable, and secure web application infrastructure on AWS using Terraform. It showcases advanced DevOps practices in cloud infrastructure management and highlights the use of auto-scaling mechanisms to optimize application performance and resource utilization.
+This project demonstrates the deployment of a robust, scalable, and secure web application infrastructure on AWS using Terraform. It showcases DevOps practices in cloud infrastructure management and highlights the use of auto-scaling mechanisms to optimize application performance, resource utilization and to monitor and analyze usage of the website.
 
 ## 🏗️ Infrastructure Architecture
 
@@ -13,6 +13,7 @@ This project demonstrates the deployment of a robust, scalable, and secure web a
 - ⚖️ **Load Balancing**: Application Load Balancer (ALB) to ensure even traffic distribution.
 - 📈 **Scaling**: Target Tracking Auto Scaling Policy to dynamically adjust resources.
 - 📜 **Deployment**: Infrastructure as Code (IaC) with Terraform for repeatability and automation.
+- 🗂️ **Logging**: Access logs from the Application Load Balancer are stored in S3 for monitoring and auditing.
 
 ## 🔍 Auto Scaling Demonstration
 
